@@ -1,0 +1,25 @@
+# Ignore node_modules directory
+node_modules/
+
+# Ignore log files
+*.log
+
+# Ignore OS-specific files
+.DS_Store
+
+# Ignore compiled files
+*.class
+*.o
+*.out
+*.exe
+
+# Ignore Python bytecode files
+__pycache__/
+*.py[cod]
+
+# Ignore environment variable files
+.env
+
+# Ignore build directories
+/build
+/dist
