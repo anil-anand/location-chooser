@@ -1,7 +1,7 @@
 import axios from "axios";
 import { toPairs } from "ramda";
 
-import { BASE_64_FLAG } from "../constants";
+import { BASE_64_FLAG, CAPTURES_URL } from "../constants";
 
 const buildMapUrl = ({
   latitude,
@@ -63,3 +63,5 @@ export const buildUrl = (route, params) => {
 
   return route;
 };
+
+export const getCapturedMapUrl = (id) => `${CAPTURES_URL}/${id}`;
