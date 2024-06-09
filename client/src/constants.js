@@ -11,6 +11,7 @@ export const HEADER_TITLES = {
 export const SIDEBAR_ITEMS = [
   { label: "Captured maps", path: routes.capturedMaps },
   { label: "New map capture", path: routes.newMapCapture },
+  { label: "Top regions", path: routes.topRegions },
 ];
 
 export const BASE_64_FLAG = "data:image/png;base64,";
@@ -21,3 +22,4 @@ const BASE_URL =
     : "https://location-chooser-backend.vercel.app";
 export const SAVE_URL = `${BASE_URL}/save`;
 export const CAPTURES_URL = `${BASE_URL}/captures`;
+export const TOP_REGIONS_URL = `${BASE_URL}/top-regions`;
