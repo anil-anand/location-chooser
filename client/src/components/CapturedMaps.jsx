@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 
 import axios from "axios";
 import {
-  CircularProgress,
   Paper,
   Table,
   TableBody,
@@ -12,6 +11,8 @@ import {
   TableRow,
 } from "@mui/material";
 import { useHistory } from "react-router-dom";
+
+import PageLoader from "./PageLoader";
 
 import { CAPTURES_URL } from "../constants";
 import routes from "../routes";
@@ -38,13 +39,7 @@ const CapturedMaps = () => {
     fetchMaps();
   }, []);
 
-  if (isLoading) {
-    return (
-      <div className="flex flex-grow items-center justify-center">
-        <CircularProgress />
-      </div>
-    );
-  }
+  if (isLoading) return <PageLoader />;
 
   return (
     <TableContainer component={Paper}>
