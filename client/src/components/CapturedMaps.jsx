@@ -10,6 +10,7 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
+import { isEmpty } from "ramda";
 import { useHistory } from "react-router-dom";
 
 import PageLoader from "./PageLoader";
@@ -40,6 +41,14 @@ const CapturedMaps = () => {
   }, []);
 
   if (isLoading) return <PageLoader />;
+
+  if (isEmpty(maps)) {
+    return (
+      <div className="flex flex-grow items-center justify-center text-2xl">
+        No captured maps found
+      </div>
+    );
+  }
 
   return (
     <TableContainer component={Paper}>
