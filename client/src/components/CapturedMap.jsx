@@ -12,7 +12,7 @@ import {
   Tooltip,
   Typography,
 } from "@mui/material";
-import { isNotEmpty, not } from "ramda";
+import { isNotEmpty } from "ramda";
 import { useParams } from "react-router-dom";
 
 import Cuboid from "./Cuboid";
@@ -27,7 +27,6 @@ const CapturedMap = () => {
   const [error, setError] = useState({});
   const [textureUrl, setTextureUrl] = useState("");
   const [isLoading, setIsLoading] = useState(true);
-  const [isEditing, setIsEditing] = useState(false);
   const [isUpdating, setIsUpdating] = useState(false);
   const [title, setTitle] = useState("");
   const [toastMessage, setToastMessage] = useState(CAPTURE_CREATED_MESSAGE);
@@ -37,14 +36,17 @@ const CapturedMap = () => {
   const mapUrl = useMemo(() => getCapturedMapUrl(id), [id]);
 
   const query = new URLSearchParams(window.location.search);
+  const isNewCapture = Boolean(query.get("new"));
 
-  const [showToast, setShowToast] = useState(Boolean(query.get("new")));
+  const [showToast, setShowToast] = useState(isNewCapture);
+  const [isEditing, setIsEditing] = useState(isNewCapture);
 
   const fetchMap = async () => {
     setIsLoading(true);
     try {
       const { data } = await axios.get(mapUrl);
       setMap(data);
+      setTitle(data.title);
       setTextureUrl(await getBase64Image({ ...data }));
     } catch (error) {
       setError(error);
@@ -90,6 +92,8 @@ const CapturedMap = () => {
       <div className="flex items-center gap-3">
         {isEditing ? (
           <Input
+            autoFocus
+            className="w-80"
             defaultValue={map.title}
             value={title}
             onChange={(event) => setTitle(event.target.value)}
