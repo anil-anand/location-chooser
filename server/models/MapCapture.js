@@ -8,6 +8,7 @@ const mapCaptureSchema = new mongoose.Schema(
     zoom: { type: Number, required: true },
     width: { type: Number, required: true, default: 600 },
     height: { type: Number, required: true, default: 400 },
+    geoCodedLocation: { type: String },
   },
   { timestamps: true }
 );

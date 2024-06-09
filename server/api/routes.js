@@ -15,6 +15,10 @@ const myCache = new NodeCache({ stdTTL: CACHE_TTL });
 router.post("/save", async (request, response) => {
   try {
     const { latitude, longitude, zoom, image, width, height } = request.body;
+    const geoCodedLocationResponse = await axios.get(
+      `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${process.env.GOOGLE_MAPS_API_KEY}&language=en`
+    );
+
     const newCapture = new MapCapture({
       latitude,
       longitude,
@@ -23,6 +27,9 @@ router.post("/save", async (request, response) => {
       width,
       height,
       title: `Map Capture ${new Date().toISOString()}`,
+      geoCodedLocation:
+        geoCodedLocationResponse.data.results[0]?.formatted_address ||
+        "Unknown location",
     });
     await newCapture.save();
     myCache.del([CAPTURES_CACHE_KEY, TOP_REGIONS_CACHE_KEY]);
@@ -90,27 +97,17 @@ router.get("/top-regions", async (_, response) => {
             zoom: "$zoom",
           },
           count: { $sum: 1 },
+          geoCodedLocation: { $first: "$geoCodedLocation" },
         },
       },
       { $sort: { count: -1 } },
       { $limit: 3 },
     ]);
 
-    const geoCodedRegions = await Promise.all(
-      captures.map(async (region) => {
-        const { latitude, longitude } = region._id;
-
-        const response = await axios.get(
-          `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${process.env.GOOGLE_MAPS_API_KEY}&language=en`
-        );
-        const address =
-          response.data.results[0]?.formatted_address || "Unknown location";
-        return {
-          ...region,
-          name: address,
-        };
-      })
-    );
+    const geoCodedRegions = captures.map((region) => ({
+      ...region,
+      name: region.geoCodedLocation || "Unknown location",
+    }));
 
     myCache.set(TOP_REGIONS_CACHE_KEY, geoCodedRegions);
     response.json(geoCodedRegions);
