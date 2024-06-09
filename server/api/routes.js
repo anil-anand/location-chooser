@@ -1,7 +1,12 @@
 const express = require("express");
-const router = express.Router();
-const MapCapture = require("../models/MapCapture");
 const axios = require("axios");
+const NodeCache = require("node-cache");
+
+const { CACHE_TTL, CAPTURES_CACHE_KEY } = require("../constants");
+const MapCapture = require("../models/MapCapture");
+
+const router = express.Router();
+const myCache = new NodeCache({ stdTTL: CACHE_TTL });
 
 router.post("/save", async (request, response) => {
   try {
@@ -15,6 +20,7 @@ router.post("/save", async (request, response) => {
       height,
     });
     await newCapture.save();
+    myCache.del(CAPTURES_CACHE_KEY);
     response.status(201).send("Saved");
   } catch (error) {
     response.status(500).send(error.message);
@@ -23,8 +29,13 @@ router.post("/save", async (request, response) => {
 
 router.get("/captures", async (_, response) => {
   try {
-    const captures = await MapCapture.find().sort({ createdAt: -1 });
-    response.json(captures);
+    if (myCache.has(CAPTURES_CACHE_KEY)) {
+      response.json(myCache.get(CAPTURES_CACHE_KEY));
+    } else {
+      const captures = await MapCapture.find().sort({ createdAt: -1 });
+      myCache.set(CAPTURES_CACHE_KEY, captures);
+      response.json(captures);
+    }
   } catch (error) {
     response.status(500).send(error.message);
   }
@@ -32,11 +43,16 @@ router.get("/captures", async (_, response) => {
 
 router.get("/captures/:id", async (request, response) => {
   try {
-    const capture = await MapCapture.findOne({ _id: request.params.id });
+    if (myCache.has(request.params.id)) {
+      response.json(myCache.get(request.params.id));
+    } else {
+      const capture = await MapCapture.findOne({ _id: request.params.id });
 
-    if (!capture) throw new Error();
+      if (!capture) throw new Error();
 
-    response.json(capture);
+      myCache.set(request.params.id, capture);
+      response.json(capture);
+    }
   } catch (error) {
     response.status(404).send(`Capture with ID ${request.params.id} not found`);
   }
