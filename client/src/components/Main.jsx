@@ -10,6 +10,7 @@ import {
 import CapturedMap from "./CapturedMap";
 import CapturedMaps from "./CapturedMaps";
 import Container from "./Container";
+import Error from "./Error";
 import NewCapture from "./NewCapture";
 
 import routes from "../routes";
@@ -23,7 +24,7 @@ const Main = () => {
           <Route path={routes.capturedMaps} component={CapturedMaps} />
           <Route path={routes.show} component={CapturedMap} />
           <Route path={routes.newMapCapture} component={NewCapture} />
-          <Route path="*" component={() => <div>404 Not Found</div>} />
+          <Route path="*" component={Error} />
         </Switch>
       </Container>
     </Router>
