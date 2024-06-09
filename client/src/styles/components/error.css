@@ -1,0 +1,35 @@
+.error-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 1;
+}
+
+.error-content {
+  text-align: center;
+}
+
+.error-code {
+  font-size: 5em;
+  color: #6c757d;
+}
+
+.error-text {
+  font-size: 1.25em;
+  color: #6c757d;
+  margin: 1em 0;
+}
+
+.error-link {
+  display: inline-block;
+  padding: 0.5em 1em;
+  color: #fff;
+  background-color: #007bff;
+  border-radius: 0.25em;
+  text-decoration: none;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.error-link:hover {
+  background-color: #0056b3;
+}
