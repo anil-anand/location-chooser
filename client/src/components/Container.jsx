@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import classNames from "classnames";
 import Box from "@mui/material/Box";
@@ -38,6 +38,10 @@ const Container = ({ children }) => {
 
   const handleDrawerTransitionEnd = () => setIsClosing(false);
   const handleDrawerToggle = () => !isClosing && setIsMobileSidebarOpen(not);
+
+  useEffect(() => {
+    setActivePath(history.location.pathname);
+  }, [history.location.pathname]);
 
   const drawer = (
     <div className="border-blue-600 border-t-20">
