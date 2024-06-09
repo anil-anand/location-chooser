@@ -17,3 +17,4 @@ export const BASE_64_FLAG = "data:image/png;base64,";
 
 const BASE_URL = "http://localhost:8000";
 export const SAVE_URL = `${BASE_URL}/save`;
+export const CAPTURES_URL = `${BASE_URL}/captures`;

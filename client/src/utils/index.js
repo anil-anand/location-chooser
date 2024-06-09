@@ -54,3 +54,12 @@ export const getBase64Image = async ({
     return "";
   }
 };
+
+export const buildUrl = (route, params) => {
+  toPairs(params).forEach(([key, value]) => {
+    if (!route.includes(`:${key}`)) return;
+    route = route.replace(`:${key}`, encodeURIComponent(value));
+  });
+
+  return route;
+};

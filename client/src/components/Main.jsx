@@ -2,10 +2,12 @@ import React from "react";
 
 import {
   BrowserRouter as Router,
+  Redirect,
   Route,
   Switch,
 } from "react-router-dom";
 
+import CapturedMaps from "./CapturedMaps";
 import Container from "./Container";
 import NewCapture from "./NewCapture";
 
@@ -16,6 +18,8 @@ const Main = () => {
     <Router>
       <Container>
         <Switch>
+          <Redirect exact from="/" to={routes.capturedMaps} />
+          <Route path={routes.capturedMaps} component={CapturedMaps} />
           <Route path={routes.newMapCapture} component={NewCapture} />
           <Route path="*" component={() => <div>404 Not Found</div>} />
         </Switch>
