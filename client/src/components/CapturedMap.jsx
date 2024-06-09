@@ -1,15 +1,18 @@
 import React, { useEffect, useState } from "react";
 
 import axios from "axios";
+import { isNotEmpty } from "ramda";
 import { useParams } from "react-router-dom";
 
 import Cuboid from "./Cuboid";
+import Error from "./Error";
 import PageLoader from "./PageLoader";
 
 import { getBase64Image, getCapturedMapUrl } from "../utils";
 
 const CapturedMap = () => {
   const [map, setMap] = useState({});
+  const [error, setError] = useState({});
   const [textureUrl, setTextureUrl] = useState("");
   const [isLoading, setIsLoading] = useState(true);
 
@@ -20,9 +23,10 @@ const CapturedMap = () => {
       const { data } = await axios.get(getCapturedMapUrl(id));
       setMap(data);
       setTextureUrl(await getBase64Image({ ...data }));
-      setIsLoading(false);
     } catch (error) {
-      console.error("Error fetching captured maps:", error);
+      setError(error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -31,6 +35,8 @@ const CapturedMap = () => {
   }, []);
 
   if (isLoading) return <PageLoader />;
+
+  if (isNotEmpty(error)) return <Error code={error.response.status} />;
 
   return (
     <Cuboid height={map.height} textureUrl={textureUrl} width={map.width} />
