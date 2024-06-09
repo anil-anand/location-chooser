@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const MapCapture = require("./models/MapCapture");
+const MapCapture = require("../models/MapCapture");
+const axios = require("axios");
 
 router.post("/save", async (request, response) => {
   try {
@@ -32,6 +33,9 @@ router.get("/captures", async (_, response) => {
 router.get("/captures/:id", async (request, response) => {
   try {
     const capture = await MapCapture.findOne({ _id: request.params.id });
+
+    if (!capture) throw new Error();
+
     response.json(capture);
   } catch (error) {
     response.status(404).send(`Capture with ID ${request.params.id} not found`);
