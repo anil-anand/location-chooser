@@ -55,18 +55,20 @@ const CapturedMaps = () => {
       <Table>
         <TableHead>
           <TableRow>
+            <TableCell>Title</TableCell>
             <TableCell>Latitude</TableCell>
             <TableCell>Longitude</TableCell>
             <TableCell>Zoom</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {maps.map(({ _id: id, latitude, longitude, zoom }, index) => (
+          {maps.map(({ _id: id, latitude, longitude, zoom, title }, index) => (
             <TableRow
               className="cursor-pointer hover:bg-gray-100 transition-colors ease-in-out duration-300"
               key={index}
               onClick={() => history.push(buildUrl(routes.show, { id }))}
             >
+              <TableCell>{title}</TableCell>
               <TableCell>{latitude}</TableCell>
               <TableCell>{longitude}</TableCell>
               <TableCell>{zoom}</TableCell>

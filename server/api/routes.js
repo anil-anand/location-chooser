@@ -22,6 +22,7 @@ router.post("/save", async (request, response) => {
       image,
       width,
       height,
+      title: `Map Capture ${new Date().toISOString()}`,
     });
     await newCapture.save();
     myCache.del([CAPTURES_CACHE_KEY, TOP_REGIONS_CACHE_KEY]);
@@ -59,6 +60,17 @@ router.get("/captures/:id", async (request, response) => {
     }
   } catch (error) {
     response.status(404).send(`Capture with ID ${request.params.id} not found`);
+  }
+});
+
+router.put("/captures/:id", async (request, response) => {
+  try {
+    const { title } = request.body;
+    await MapCapture.updateOne({ _id: request.params.id }, { title });
+    myCache.del([CAPTURES_CACHE_KEY, request.params.id]);
+    response.status(200).json({ message: "Updated" });
+  } catch (error) {
+    response.status(500).send(error.message);
   }
 });
 

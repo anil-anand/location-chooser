@@ -8,7 +8,7 @@ import { GoogleMap, useJsApiLoader } from "@react-google-maps/api";
 import { useHistory } from "react-router-dom";
 
 import { SAVE_URL } from "../constants";
-import { buildUrl, getBase64Image } from "../utils";
+import { buildUrl } from "../utils";
 import routes from "../routes";
 
 const NewCapture = () => {
@@ -38,11 +38,10 @@ const NewCapture = () => {
       const params = { latitude, longitude, zoom, width, height };
 
       try {
-        const imageBase64 = await getBase64Image(params);
         const {
           data: { id },
         } = await axios.post(SAVE_URL, params);
-        history.push(buildUrl(routes.show, { id }));
+        history.push(buildUrl(routes.show, { id, new: true }));
       } catch (error) {
         console.error("Error capturing the map image:", error);
       } finally {

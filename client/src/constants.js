@@ -6,6 +6,7 @@ export const HEADER_WIDTH = 80;
 export const HEADER_TITLES = {
   "/new": "New map capture",
   "/captured-maps": "Captured maps",
+  "/top-regions": "Top regions",
 };
 
 export const SIDEBAR_ITEMS = [
@@ -15,6 +16,8 @@ export const SIDEBAR_ITEMS = [
 ];
 
 export const BASE_64_FLAG = "data:image/png;base64,";
+export const CAPTURE_CREATED_MESSAGE = "Map captured successfully";
+export const TITLE_UPDATED_MESSAGE = "Title updated successfully";
 
 const BASE_URL =
   process.env.NODE_ENV === "development"

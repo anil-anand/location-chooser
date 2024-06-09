@@ -124,7 +124,7 @@ const Container = ({ children }) => {
           >
             <MenuIcon />
           </IconButton>
-          <Typography color="inherit" component="div" variant="h6">
+          <Typography color="inherit" component="div" variant="h4">
             {headerTitle}
           </Typography>
         </div>

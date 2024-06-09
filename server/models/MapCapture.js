@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 
 const mapCaptureSchema = new mongoose.Schema({
+  title: { type: String, required: true, default: "Map Capture" },
   latitude: { type: Number, required: true },
   longitude: { type: Number, required: true },
   zoom: { type: Number, required: true },
