@@ -21,7 +21,7 @@ router.post("/save", async (request, response) => {
     });
     await newCapture.save();
     myCache.del(CAPTURES_CACHE_KEY);
-    response.status(201).send("Saved");
+    response.status(201).json({ message: "Saved", id: newCapture._id });
   } catch (error) {
     response.status(500).send(error.message);
   }
