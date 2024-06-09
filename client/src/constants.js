@@ -15,6 +15,9 @@ export const SIDEBAR_ITEMS = [
 
 export const BASE_64_FLAG = "data:image/png;base64,";
 
-const BASE_URL = "http://localhost:8000";
+const BASE_URL =
+  process.env.NODE_ENV === "development"
+    ? "http://localhost:8000"
+    : "https://location-chooser-backend.vercel.app";
 export const SAVE_URL = `${BASE_URL}/save`;
 export const CAPTURES_URL = `${BASE_URL}/captures`;
