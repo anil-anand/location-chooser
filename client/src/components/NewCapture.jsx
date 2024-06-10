@@ -21,7 +21,7 @@ const NewCapture = () => {
   const history = useHistory();
 
   const { isLoaded } = useJsApiLoader({
-    googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
+    googleMapsApiKey: process.env.GOOGLE_MAPS_API,
   });
 
   const captureMap = async () => {

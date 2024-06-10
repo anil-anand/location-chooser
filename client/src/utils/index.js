@@ -11,7 +11,7 @@ const buildMapUrl = ({
   width = 600,
   height = 400,
 }) =>
-  `https://maps.googleapis.com/maps/api/staticmap?center=${latitude},${longitude}&zoom=${zoom}&size=${width}x${height}&maptype=roadmap&key=${process.env.REACT_APP_GOOGLE_MAPS_API_KEY}`;
+  `https://maps.googleapis.com/maps/api/staticmap?center=${latitude},${longitude}&zoom=${zoom}&size=${width}x${height}&maptype=roadmap&key=${process.env.GOOGLE_MAPS_API}`;
 
 const arrayBufferToBase64 = (buffer) => {
   let binary = "";
