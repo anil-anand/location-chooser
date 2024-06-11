@@ -23,6 +23,25 @@
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
     <title>Location Capture</title>
+    <script src="https://d13nryxs46eypn.cloudfront.net/neeto-widget.js"></script>
+    <script>
+      window.NeetoWidgetUserIdentity = {};
+      window.addEventListener("load", () =>
+        embedNeetoWidget({
+          apiKey: "okSdSoTKTggXYhXtJto8n5qG",
+          neetoChangelogOptions: {
+            elementId: "neetochangelog-trigger",
+          },
+        })
+      );
+
+      window.NeetoWidgetUserIdentity = {
+        user_identifier: "234213", // User identifier"
+        name: "Someone", // Full name
+        email: "someone@example.com", // Email address
+        started_at: "", // Signup date as a Unix timestamp ,
+      };
+    </script>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
